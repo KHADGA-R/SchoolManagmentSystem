@@ -1,16 +1,42 @@
 package com.example.SMSBoot.models;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="courses")
 public class Course {
 
+    @Id
+    @Column(name="course_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courseId;
+
+    @Column(name="subject")
     private String subject;
+
+    @Column(name="course_number")
     private int number;
+
+    @Column(name="course_name")
     private String name;
-    private String teacher;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="teacher")
+    private Person teacher;
+
+    @ElementCollection
+    @CollectionTable(name="topics", joinColumns = @JoinColumn(name="course_id"))
+    @Column(name="topic")
     private List<String> topics;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="student_course_junction",
+            joinColumns = {@JoinColumn(name="course_id")},
+            inverseJoinColumns = {@JoinColumn(name="person_id")}
+    )
     private List<Person>students;
 
     public Course(){
@@ -60,11 +86,11 @@ public class Course {
         this.name = name;
     }
 
-    public String getTeacher() {
+    public Person getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(String teacher) {
+    public void setTeacher() {
         this.teacher = teacher;
     }
 
@@ -95,5 +121,8 @@ public class Course {
                 ", topics=" + topics +
                 ", students=" + students +
                 '}';
+    }
+
+    public void setTeacher(Person t) {
     }
 }

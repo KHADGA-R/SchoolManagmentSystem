@@ -3,7 +3,8 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.username">username</property>
+        <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">password</property>
+
     </session-factory>
 </hibernate-configuration>

@@ -1,16 +1,37 @@
 package com.example.SMSBoot.models;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+@Entity
+@Table(name="person")
+
 public class Person {
 
+    @Id
+    @Column(name="personId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personId;
+
+    @Column(name="person_type", nullable = false)
     private Type type;
+
+    @Column(name="first_name", nullable = false)
     private String first;
+
+    @Column(name="last_name", nullable = false)
     private String last;
+
+    @Column(name="email", nullable = false, unique = true)
     private String email;
+
+    @Column(name="password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Assignment> assignments = new ArrayList<>();
 
 

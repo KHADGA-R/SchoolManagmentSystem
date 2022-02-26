@@ -1,14 +1,35 @@
 package com.example.SMSBoot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.sql.Date;
 
+
+@Entity
+@Table(name="assignments")
 public class Assignment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="assignment_id")
     private int assignmentId;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="student")
+    @JsonIgnore
     private Person student;
+
+    @Column(name="grade")
     private double grade;
+
+    @Column(name="done")
     private boolean done;
+
+    @Column(name="past_due")
     private boolean pastDue;
+
+    @Column(name="due")
     private Date due;
 
 
